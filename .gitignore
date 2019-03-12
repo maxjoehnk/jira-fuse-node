@@ -1,0 +1,6 @@
+node_modules
+config.json
+.idea
+*.iml
+yarn-error.log
+lib
