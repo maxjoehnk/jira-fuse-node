@@ -56,7 +56,7 @@ export class JiraFuseFilesystem implements IFuseFilesystem {
             atime: new Date(),
             mtime: new Date(),
             ctime: new Date(),
-            nlink: 1,
+            nlink: attributes.mode === FileMode.Directory ? 2 : 1,
             size: attributes.size || 40,
             mode: JiraFuseFilesystem.mapMode(attributes),
             uid: process.getuid(),
@@ -66,8 +66,8 @@ export class JiraFuseFilesystem implements IFuseFilesystem {
 
     private static mapMode(attributes: FileAttributes): number {
         if (attributes.mode === FileMode.Directory) {
-            return S_IFDIR;
+            return S_IFDIR | 0o777;
         }
-        return S_IFREG;
+        return S_IFREG | 0o777;
     }
 }

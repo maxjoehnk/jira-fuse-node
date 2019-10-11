@@ -18,7 +18,7 @@ export class JiraReadDirOperation {
 
         if (ISSUES_PATH.test(path)) {
             const project = ISSUES_PATH.exec(path)[1];
-            return this.getProjectRoot(project);
+            return this.getProjectIssues(project);
         }
 
         if (ISSUE_PATH.test(path)) {
@@ -37,7 +37,7 @@ export class JiraReadDirOperation {
         return projects.map(project => project.key);
     }
 
-    private async getProjectRoot(project: string): Promise<string[]> {
+    private async getProjectIssues(project: string): Promise<string[]> {
         const issues = await this.jiraClient.listIssues(project);
 
         return issues.map(({ key }) => key);
